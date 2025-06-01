@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import '../styles/SignupForm.css';
 
 function SignupForm() {
@@ -9,6 +8,8 @@ function SignupForm() {
     email: '',
     password: ''
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +22,6 @@ function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // In a real app, you would call your signup API here
       console.log('Signup data:', formData);
       alert('Signup successful! Please login.');
       window.location.href = '/login';
@@ -33,60 +33,98 @@ function SignupForm() {
 
   return (
     <div className="signup-container">
-      <h2>Create new account</h2>
-      <p>Already A Member? <a href="/login">Log In</a></p>
-      
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="firstName">First name</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
+      {/* Header Navigation */}
+      <div className="header-nav">
+        <div className="logo">
+          Anywhere app.
         </div>
-        
-        <div className="form-group">
-          <label htmlFor="lastName">Last name</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
+        <div className="nav-links">
+          <a href="/">Home</a>
+          <a href="/login">Join</a>
         </div>
+      </div>
+
+      {/* Form Section */}
+      <div className="form-container">
+        <div className="start-text">START FOR FREE</div>
+        <h2>Create new account.</h2>
+        <p className="login-link">Already A Member? <a href="/login">Log In</a></p>
         
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        
-        <button type="submit" className="create-account-btn">Create account</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="firstName">First name</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="Michal"
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="lastName">Last name</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Masiak"
+                required
+              />
+            </div>
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="michal.masiak@anywhere.co"
+              required
+            />
+          </div>
+          
+          <div className="form-group password-field">
+            <label htmlFor="password">Password</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="••••••••"
+              required
+            />
+            <button 
+              type="button" 
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? '👁️' : '👁️‍🗨️'}
+            </button>
+          </div>
+          
+          <div className="form-actions">
+            <a href="#" className="change-method">Change method</a>
+            <button type="submit" className="create-account-btn">
+              Create account
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Image Section */}
+      <div className="image-section">
+        <div className="bottom-logo"></div>
+      </div>
     </div>
   );
 }
